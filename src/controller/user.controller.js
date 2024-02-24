@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 // import user repository
-import { addUser} from "../model/user.repository.js";
+import { addUser, findByEmail} from "../model/user.repository.js";
 
 // import bcrypt to hash the user password 
 import bcrypt from 'bcrypt';
@@ -34,9 +34,45 @@ const createUser = async (req, res) => {
     }
 };
 
+// controller function for user to login
+const loginUser = async (req,res)=>{
+        const {email, password} = req.body;
+        try{ 
+            const users =  await findByEmail(email);
+            if(!users){
+                res.status(404).json({message: 'Inavlid Credentials. Please check the email you have provided.'});
+            }else{
+                //  Compare password with hashed password.
+                // console.log(user[0].password);
+                const user = users[0];
+                const result = await bcrypt.compare(password, user.password);
+                if(result){
+                    // create a jwt token
+                    const token = jwt.sign(
+                        {
+                            userID: user.id,
+                            email: user.email
+                        },
+                        process.env.SECRET,   // secret key
+                        {
+                            expiresIn:'1h'
+                        }
+                    );
+                    // send the token 
+                    res.status(200).json({token:token});
+                }else{
+                    res.status(404).json({message: 'Inavlid Credentials. Please check the password you have provided.'});
+                }
+            }
+        }catch (error){
+            // console.log(error);
+            res.status(500).json({message:'Something went wrong. Please try again'});
+        }
+}
+
 
 // export the controller functions
-export {  createUser};
+export {createUser, loginUser};
 
 
 /*
