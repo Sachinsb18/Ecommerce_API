@@ -59,7 +59,7 @@ const loginUser = async (req,res)=>{
                         }
                     );
                     // send the token 
-                    res.status(200).json({token:token});
+                    res.status(200).json({message:'Logged IN'},{token:token});
                 }else{
                     res.status(404).json({message: 'Inavlid Credentials. Please check the password you have provided.'});
                 }
