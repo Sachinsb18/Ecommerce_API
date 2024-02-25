@@ -6,13 +6,15 @@ import createTable from './src/model/createTable.js';
 import userRouter from './src/router/user.routes.js';
 import ProductRouter from './src/router/product.routes.js';
 import jwtAuth from './src/middlewares/jwtmiddleware.js';
+import cartRoute from './src/router/cart.routes.js';
 
 const app = express();
  
 app.use(express.json());
 
 app.use("/api/user", userRouter);
-app.use("/api/products",jwtAuth, ProductRouter)
+app.use("/api/products",jwtAuth, ProductRouter);
+app.use("/api/cart",jwtAuth, cartRoute);
 
 
 

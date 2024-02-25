@@ -7,7 +7,8 @@ import { getAllProducts, getProductById, insertProduct, updateProductById, delet
 
 
 // controller function to add a new product
-export const addProduct = async (req,res)=>{  
+export const addProduct = async (req,res)=>{ 
+    
     try{
             const product =  await insertProduct(req.body);            
                 res.status(201).json({message:'Item added successfully',product: product});            

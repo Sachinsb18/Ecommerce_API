@@ -1,10 +1,14 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
 
+import pool from '../../config/db.js';  // for creating cart tables
+
+const dbName =process.env.MYSQL_DATABASE;
 export default async function createTable(connection){
 
  // Select the database
-const dbName =process.env.MYSQL_DATABASE
+
 await connection.query(`USE ${dbName}`);
 
 // Create user table if it doesn't exist
@@ -52,4 +56,26 @@ const created = await connection.query(`
 //         ('clothings');
 //     `)
 //  }
+}
+
+export async function createCartTable (tablename){
+
+  const connection = await pool.getConnection();
+  await connection.query(`USE ${dbName}`);
+
+  await connection.query(`
+    CREATE TABLE IF NOT EXISTS ${tablename}(
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      productId INT NOT NULL,
+      userId INT NOT NULL,
+      title VARCHAR(255) NOT NULL,
+      category_Id INT NOT NULL,
+      price INT NOT NULL,
+      quantity INT NOT NULL CHECK (quantity>0),
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+      
+    )
+`)
+
 }
