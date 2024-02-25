@@ -5,13 +5,14 @@ import pool from './config/db.js';
 import createTable from './src/model/createTable.js';
 import userRouter from './src/router/user.routes.js';
 import ProductRouter from './src/router/product.routes.js';
+import jwtAuth from './src/middlewares/jwtmiddleware.js';
 
 const app = express();
  
 app.use(express.json());
 
 app.use("/api/user", userRouter);
-app.use("/api/products", ProductRouter)
+app.use("/api/products",jwtAuth, ProductRouter)
 
 
 
