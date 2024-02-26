@@ -6,7 +6,7 @@ API for an ecommerce platform
 
 # To run this project on your local machine
 
-1. Clone this repository or download the project visiting : https://github.com/Sachinsb18/Product-Inventory
+1. Clone this repository or download the project visiting :https://github.com/Sachinsb18/Ecommerce_API
 2. Install all necessary dependencies using 'npm i' command on yopur terminal.
 3. To run this project use command 'node index.js' or 'npm start' on your terminal.
 4. Have MySQL workbench on your local machine
