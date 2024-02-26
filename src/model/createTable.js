@@ -5,6 +5,7 @@ dotenv.config();
 import pool from '../../config/db.js';  // for creating cart tables
 
 const dbName =process.env.MYSQL_DATABASE;
+let count=1;
 export default async function createTable(connection){
 
  // Select the database
@@ -45,19 +46,21 @@ const created = await connection.query(`
       )     
 `)
   
-// if(created){ 
-//     // console.log(created.affectedRows);
-//     await connection.query(`
-//         INSERT INTO categories (name) VALUES 
-//         ('books'),
-//         ('jewellery'),
-//         ('footware'),
-//         ('electronics'),
-//         ('clothings');
-//     `)
-//  }
+if(count===1){ 
+    // console.log(created.affectedRows);
+    await connection.query(`
+        INSERT INTO categories (name) VALUES 
+        ('books'),
+        ('jewellery'),
+        ('footware'),
+        ('electronics'),
+        ('clothings');
+    `)
+ }
+ count++;
 }
 
+// function to create cart table
 export async function createCartTable (tablename){
 
   const connection = await pool.getConnection();
@@ -72,6 +75,31 @@ export async function createCartTable (tablename){
       category_Id INT NOT NULL,
       price INT NOT NULL,
       quantity INT NOT NULL CHECK (quantity>0),
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+      
+    )
+`)
+
+}
+
+
+// function to create orders table
+export async function createOrderTable (tablename){
+
+  const connection = await pool.getConnection();
+  await connection.query(`USE ${dbName}`);
+
+  await connection.query(`
+    CREATE TABLE IF NOT EXISTS ${tablename}(
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      productId INT NOT NULL,
+      userId INT NOT NULL,
+      title VARCHAR(255) NOT NULL,
+      category_Id INT NOT NULL,
+      price INT NOT NULL,
+      quantity INT NOT NULL CHECK (quantity>0),
+      total INT AS (quantity * price) STORED, 
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       

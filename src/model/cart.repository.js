@@ -40,6 +40,7 @@ export const insertIntoCart = async (productId,userId,quantity)=>{
        const [result] = await connection.query(`INSERT INTO ${tablename} (productId,userId,title,category_Id,price,quantity) VALUES (?,?,?,?,?,?)`,[productId,userId,title,category_Id,price,quantity]);
         // console.log(tablename);
         // console.log(result);
+        connection.release();
         return result;
     }catch(error){
         console.log(error);
@@ -65,6 +66,7 @@ export const updateCart = async (productId,userId,quantity)=>{
 
        const [product] = await connection.query(`UPDATE ${tablename} SET quantity = ? WHERE productId=? `,[quantity, productId]);
     //    console.log(product);
+      connection.release();
        return product;
     }catch(error){
         console.log(error);
@@ -92,6 +94,9 @@ export const deleteFromCart = async (productId,userId)=>{
        //  deleteing the item 
          const [result] = await connection.query(`DELETE FROM ${tablename} WHERE productId=?`,[productId]);
         console.log(result);
+        
+        connection.release();
+
         if(result.affectedRows ===0){
             throw new Error('Product not found');
         }
