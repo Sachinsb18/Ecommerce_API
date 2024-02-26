@@ -17,11 +17,13 @@ API for an ecommerce platform
 # User Routes
 
 **API to create an user** 
+
 URL [POST]: api/user/signup
 
 -pass username, email, password in request body as json object
 
 **API to login user** 
+
 URL [POST]: api/user/signin
 
 -pass email, password in request body as json object and on successfull login usser receives jwt token which should be passed in request headers for authorization.
@@ -29,24 +31,29 @@ URL [POST]: api/user/signin
 # Product Routes
 
 **API to add an product to the table**
+
 URL [POST]: api/products
 
 -pass title,description,price,quantity and category_id as json object in request body along with jwt token in authorization header
 
 **API to update an existing product**
+
 URL [PUT]: api/products/:id
 
 -pass id of the products in url path and quantity as json object in request body along with jwt token in authorization header
 
 **API to get all products** 
+
 URL [GET]: api/products
 
 **API to get a product by its id***
+
 URL [GET]: api/products/:id
 
 -pass id of the product in url path
 
 **API to delete a product**
+
 URL [DELETE]: api/products/:id
 
 -pass id of the product in url path
@@ -54,16 +61,19 @@ URL [DELETE]: api/products/:id
 # Cart Routes
 
 **API to add an item to cart**
+
 URL [POST]: api/cart/:id
 
 -pass id of the product in url path and quantity in request body as json object along with jwt token in authorization header
 
 **API to upddate an cart item quantity by its id**
+
 URL [PUT]: api/cart/:id
 
 -pass id of the product in url path and quantity as json object along with jwt token in authorization header
 
 **API to delete an item fro cart by its id**
+
 URL [DELETE]: api/cart/:id
 
 -pass id of the product in url path along with jwt token in authorization header
@@ -72,6 +82,7 @@ URL [DELETE]: api/cart/:id
 
 **API to place an order by cart id**
 URL [post]: api/order/:id
+
 
 -pass id of the cart item in url path along with jwt token in authorization header
 
