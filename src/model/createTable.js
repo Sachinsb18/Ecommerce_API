@@ -5,7 +5,7 @@ dotenv.config();
 import pool from '../../config/db.js';  // for creating cart tables
 
 const dbName =process.env.MYSQL_DATABASE;
-let count=1;
+
 export default async function createTable(connection){
 
  // Select the database
@@ -46,18 +46,18 @@ const created = await connection.query(`
       )     
 `)
   
-if(count===1){ 
-    // console.log(created.affectedRows);
-    await connection.query(`
-        INSERT INTO categories (name) VALUES 
-        ('books'),
-        ('jewellery'),
-        ('footware'),
-        ('electronics'),
-        ('clothings');
-    `)
- }
- count++;
+// if(count===1){ 
+//     // console.log(created.affectedRows);
+//     await connection.query(`
+//         INSERT INTO categories (name) VALUES 
+//         ('books'),
+//         ('jewellery'),
+//         ('footware'),
+//         ('electronics'),
+//         ('clothings');
+//     `)
+//  }
+//  count++;
 }
 
 // function to create cart table
